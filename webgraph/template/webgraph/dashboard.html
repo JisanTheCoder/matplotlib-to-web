@@ -1,0 +1,211 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dashboard</title>
+        <style>
+            * {
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                width: 100%;
+                height: 100vh;
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            body #nav {
+                width: 20%;
+                background-color: darkgreen;
+                color: white;
+                font-weight: bolder;
+                height: 100%;
+                padding-top: 50px;
+                padding-left: 35px !important;
+            }
+
+            body #nav h1, body #nav h2 {
+                margin: 20px 0px;
+                font-size: 36px;
+            }
+
+            body #view {
+                width: 80%;
+            }
+
+            body #view #form {
+                width: 100%;
+                background-color: white;
+
+            }
+
+            body #view #form form #inside-form {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                align-items: center;
+                padding: 30px 25px;
+                padding-top: 50px;
+            }
+
+            body #view #form h1 {
+                color: grey;
+                text-align: center;
+                margin-top: 20px;
+            }
+
+            body #view #form form #inside-form .align-form {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: start;
+                align-items: center;
+                width: 30%
+            }
+
+            body #view #form form #inside-form .align-form .form-group {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                width: 80%;
+            }
+
+            body #view #form form #inside-form .form-group .label {
+                width: 48%;
+                background-color: black;
+                color: white;
+                padding: 15px 10px;
+                margin: 10px 0px;
+                font-weight: bold;
+                font-size: 16px;
+
+            }
+
+            body #view #form form #inside-form .form-group .input-box {
+                width: 48%;
+                background-color: lightgrey;
+                padding: 15px 10px;
+                margin: 10px 0px;
+                font-weight: bold;
+                text-align: center;
+                margin-left: -4px;
+                margin-right: 5px;
+                border: none;
+                outline: none;
+                font-weight: bold;
+                font-size: 16px;
+            }
+
+            body #view #form form #submit {
+                text-align: center;
+            }
+
+            body #view #form form #submit input {
+                background-color: darkgreen;
+                padding: 20px 35px;
+                border-radius: 50px;
+                border: none;
+                outline: none;
+                color: white;
+                font-size: 22px;
+                margin-bottom: 25px;
+                cursor: pointer;
+            }
+
+            body #view #graph {
+                width: 100%;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+            }
+
+            body #view #graph #inside-graph {
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                align-items: center;
+                padding: 30px 15px;
+            }
+
+            body #view #graph #inside-graph {
+                background-color: grey;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div id="nav">
+            <h1>Title</h1>
+            <h2>Subtitle</h2>
+        </div>
+        <div id="view">
+            <div id="form">
+                <h1>Please Insert The Specifications of Your Project:</h1>
+                <form method="POST">
+                    {% csrf_token %}
+                    
+                    <div id="inside-form">
+                        <div class="align-form">
+                        <div class="form-group">
+                            <div class="label"><label for="sp">Success Probability</label></div>
+                            <input type="number" class="input-box" placeholder="i.e. 30%" id="sp" name="sp">
+                        </div><span>%</span>
+                        </div>
+                        <div class="align-form">
+                        <div class="form-group">
+                            <div class="label"><label for="dg">Diagnosticity</label></div>
+                            <input type="number" class="input-box" placeholder="i.e. 80%" id="dg" name="dg">
+                        </div><span>%</span>
+                        </div>
+                        <div class="align-form">
+                        <div class="form-group">
+                            <div class="label"><label for="tp">Time Periods</label></div>
+                            <input type="number" class="input-box" placeholder="i.e. 4" id="tp" name="tp">
+                        </div><span>s</span>
+                        </div>
+                        <div class="align-form">
+                        <div class="form-group">
+                            <div class="label"><label for="pz">Prize</label></div>
+                            <input type="number" class="input-box" placeholder="i.e. 1000" id="pz" name="pz">
+                        </div><span>points</span>
+                        </div>
+                        <div class="align-form">
+                        <div class="form-group">
+                            <div class="label"><label for="sc">Setup Cost</label></div>
+                            <input type="number" class="input-box" placeholder="i.e. 400" id="sc" name="sc">
+                        </div><span>points</span>
+                        </div>
+                        <div class="align-form">
+                        <div class="form-group">
+                            <div class="label"><label for="ct">Cost/Test</label></div>
+                            <input type="number" class="input-box" placeholder="i.e. 10" id="ct" name="ct">
+                        </div><span>points</span>
+                        </div>
+                    </div>
+                    <div id="submit">
+                        <input type="submit" value="Stopping Predictions">
+                    </div>
+                </form>
+            </div>
+            <div id="graph" style="display: {{display}}">
+                <div id="inside-graph">
+                    <div id="rd">
+                        <img src="{% static 'webgraph/rd.png' %}" alt="Rejection Domain">
+                    </div>
+                    <div id="ad">
+                        <img src="{% static 'webgraph/ad.png' %}" alt="Acceptance Domain">
+                    </div>
+                <div>
+            </div>
+        </div>
+        <script>
+
+        </script>
+    </body>
+</html>
+
+<!--We have finished a 50$ Project Successfully-->
